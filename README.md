@@ -7,3 +7,13 @@ Jit is a simple terminal app that is used to help using git workflows with Jira 
 ## Installation
 
 Compile from source using go-lang compiler or [download](Downloads/) binary for your platform.
+
+
+## Configuration
+
+
+## Usage
+
+## Contribution
+
+## License
