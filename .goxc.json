@@ -1,0 +1,15 @@
+{
+	"PackageVersion": "0.1.0",
+	"ConfigVersion": "0.9",
+	"Os": "darwin",
+  "OutPath": "",
+	"ArtifactsDest": "./Downloads",
+  "Resources": {
+      "Include": "",
+      "Exclude": "*.go,README.md, LICENSE"
+  },
+	"downloads-page": {
+      "fileheader": "",
+      "filename": "downloads.md"
+  }
+}

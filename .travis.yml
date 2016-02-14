@@ -1,0 +1,14 @@
+sudo: false
+language: go
+
+env:
+  - GO15VENDOREXPERIMENT=1
+
+go:
+  - 1.5
+
+install: true
+
+script:
+  - go build
+  - go test -v -cover
