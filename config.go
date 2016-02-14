@@ -19,7 +19,7 @@ type configuration struct {
 func getJSONConfiguration() configuration {
 	configuration := configuration{}
 
-	file, err := loadConfigFile()
+	file, err := loadConfigFile(".jit.json")
 	if err != nil {
 		return configuration
 	}
@@ -30,13 +30,13 @@ func getJSONConfiguration() configuration {
 }
 
 // Try to load config json file, in user home folder
-func loadConfigFile() (*os.File, error) {
+func loadConfigFile(fileName string) (*os.File, error) {
 	file := &os.File{}
 	usr, err := user.Current()
 	if err != nil {
 		return file, err
 	}
-	file, err = os.Open(usr.HomeDir + "/.jit.json")
+	file, err = os.Open(usr.HomeDir + "/" + fileName)
 	if err != nil {
 		return file, err
 	}

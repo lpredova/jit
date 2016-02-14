@@ -13,7 +13,7 @@ func createNewApp() *cli.App {
 	app.Name = "Jira & Git Worflow"
 	app.Usage = "Simple tool for automating branch management using jira issues"
 	app.Author = "Rentl.io developers@rentl.io"
-	app.Version = "1.0.0"
+	app.Version = "0.1.0"
 
 	return app
 }

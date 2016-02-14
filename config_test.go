@@ -1,6 +1,9 @@
 package main
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
 
 func TestGetJSONConfoguration(t *testing.T) {
 	getJSONConfiguration()
@@ -25,8 +28,8 @@ func TestValidateConfigurationSuccess(t *testing.T) {
 }
 
 func TestLoadUnexsitentConfigFile(t *testing.T) {
-	_, err := loadConfigFile()
-	if err != nil {
+	_, err := loadConfigFile(".uknown")
+	if strings.Contains(err.Error(), "no such file or directory") == false {
 		t.Error("Expected nil, got ", err)
 	}
 }
