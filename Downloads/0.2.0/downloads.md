@@ -10,8 +10,19 @@ jit downloads (version 0.2.0)
  * [jit\_0.2.0\_darwin\_386.zip](jit_0.2.0_darwin_386.zip)
  * [jit\_0.2.0\_darwin\_amd64.zip](jit_0.2.0_darwin_amd64.zip)
 
+### Linux
+
+ * [jit\_0.2.0\_amd64.deb](jit_0.2.0_amd64.deb)
+ * [jit\_0.2.0\_armhf.deb](jit_0.2.0_armhf.deb)
+ * [jit\_0.2.0\_i386.deb](jit_0.2.0_i386.deb)
+ * [jit\_0.2.0\_linux\_386.tar.gz](jit_0.2.0_linux_386.tar.gz)
+ * [jit\_0.2.0\_linux\_amd64.tar.gz](jit_0.2.0_linux_amd64.tar.gz)
+ * [jit\_0.2.0\_linux\_arm.tar.gz](jit_0.2.0_linux_arm.tar.gz)
+
 ### Other files
 
+ * [control.tar.gz](.goxc-temp/control.tar.gz)
+ * [data.tar.gz](.goxc-temp/data.tar.gz)
  * [LICENSE](LICENSE)
 
 
