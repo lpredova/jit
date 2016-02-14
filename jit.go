@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/codegangsta/cli"
@@ -69,6 +70,11 @@ func setCommands(app *cli.App, config *configuration) {
 				},
 			},
 			Action: func(c *cli.Context) {
+				valid := validateConfiguration(config)
+				if !valid {
+					fmt.Println(errorDecorator("Please provide valid configuration"))
+					os.Exit(1)
+				}
 				checkoutBranch(c, config)
 			},
 		},
