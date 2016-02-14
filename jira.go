@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"io/ioutil"
@@ -91,6 +92,35 @@ type IssueResolution struct {
 	Self        string `json:"self,omitempty"`
 	Name        string `json:"name,omitempty"`
 	Description string `json:"description,omitempty"`
+}
+
+// VersionIssues - struct for holding issues fixed in Version
+type VersionIssues struct {
+	Total  int      `json:"total,omitempty"`
+	Issues []*Issue `json:"issues,omitempty"`
+}
+
+func getJiraVersionIssues(version string, config *configuration) (VersionIssues, error) {
+	client := &http.Client{}
+	var issues VersionIssues
+	url := strings.TrimRight(config.URL, "/") + "/search"
+
+	var data = []byte(`{"jql":"fixVersion = ` + version + `","startAt":0,"maxResults":1000,"fields":["id","key","summary", "issuetype"],"expand":[]}`)
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(data))
+	req.Header.Set("Content-Type", "application/json")
+	if err != nil {
+		panic("Error while building jira request")
+	}
+	req.SetBasicAuth(config.Username, config.Password)
+	resp, err := client.Do(req)
+	defer resp.Body.Close()
+	contents, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return issues, err
+	}
+
+	error := json.Unmarshal(contents, &issues)
+	return issues, error
 }
 
 // GetIssue - Get Jira issue data

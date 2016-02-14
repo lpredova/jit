@@ -80,6 +80,13 @@ $ jit co -b 20
 ```
 will create new branch with name set to issue ID 20 summary
 
+### Listing issues for specific Version
+To list all issues that are in some version you can call:
+```sh
+$ jit version v1.20.1
+```
+and list of issues will be shown. This is useful for deployment messages, notifications, etc...
+
 ## Contribution
 This tool is actively used in Rentl.io Dev Workflow, but we are open to any changes, bugfixes, new features, etc. Just drop us some Pull Requests, making sure tests are passing, and we'll gladly merge it :).
 

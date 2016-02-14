@@ -17,7 +17,7 @@ func createNewApp() *cli.App {
 	app.Name = "Jira & Git Worflow"
 	app.Usage = "Simple tool for automating branch management using jira issues"
 	app.Author = "Rentl.io developers@rentl.io"
-	app.Version = "0.1.0"
+	app.Version = "0.2.0"
 
 	return app
 }
@@ -76,6 +76,19 @@ func setCommands(app *cli.App, config *configuration) {
 					os.Exit(1)
 				}
 				checkoutBranch(c, config)
+			},
+		},
+		{
+			Name:    "version",
+			Aliases: []string{"v"},
+			Usage:   "Get version issues",
+			Action: func(c *cli.Context) {
+				valid := validateConfiguration(config)
+				if !valid {
+					fmt.Println(errorDecorator("Please provide valid configuration"))
+					os.Exit(1)
+				}
+				getVersionIssues(c, config)
 			},
 		},
 	}
