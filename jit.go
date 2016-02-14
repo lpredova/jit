@@ -4,7 +4,10 @@ import (
 	"os"
 
 	"github.com/codegangsta/cli"
+	"github.com/mgutz/ansi"
 )
+
+var errorDecorator = ansi.ColorFunc("white:red")
 
 // Create New Cli App
 func createNewApp() *cli.App {
@@ -28,7 +31,7 @@ func setGlobalFlags(app *cli.App, config *configuration) {
 			Value:       config.Username,
 			Destination: &config.Username,
 		},
-		PasswordFlag{
+		cli.StringFlag{
 			Name:        "password, p",
 			Usage:       "Password for jira Basic Auth",
 			EnvVar:      "JIRA_PASSWORD",
