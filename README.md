@@ -50,7 +50,7 @@ You just have to expose this environment variables:
  * JIRA_URL
  * JIRA_PROJECT_CODE [optional]
 
- ## Configuration options
+## Configuration options
   * username - required - Your jira username. Usually first part of email address you use for jira login
   * password - required - Your jira password
   * url - required - Url pointing on your jira rest api endpoint. Ussualy something like https://company.atlassian.net/rest/api/2/
