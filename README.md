@@ -50,6 +50,12 @@ You just have to expose this environment variables:
  * JIRA_URL
  * JIRA_PROJECT_CODE [optional]
 
+ ## Configuration options
+  * username - required - Your jira username. Usually first part of email address you use for jira login
+  * password - required - Your jira password
+  * url - required - Url pointing on your jira rest api endpoint. Ussualy something like https://company.atlassian.net/rest/api/2/
+  * project - optional - Your project code that is part of your issue IDs. In jira issues have IDs like PROJ-ID, if you specify project code as PROJ you will be able to use jit commands with only specifying number part of issue ID. This is useful if you only have one jira project and don't want to repeat this in each command.
+
 ## Usage
 To see full list of commands type:
 ```sh
