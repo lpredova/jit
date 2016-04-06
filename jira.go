@@ -169,6 +169,9 @@ func getBranchNameForIssue(issue Issue) (string, error) {
 }
 
 func getBranchName(id string, config *configuration) (string, error) {
+	if id == "" && config.WorkingBranch != "" {
+		return config.WorkingBranch, nil
+	}
 	issue, err := GetIssue(id, config)
 	if err != nil {
 		return "", err

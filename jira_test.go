@@ -49,6 +49,7 @@ func TestGetJiraIssuesRestURL(t *testing.T) {
 		"pass",
 		"https://project.atlassian.net/rest/api/2/",
 		"PROJ",
+		"",
 	}
 	url := getJiraIssuesRestURL("123", &config)
 	expected := "https://project.atlassian.net/rest/api/2/issue/PROJ-123"
@@ -61,6 +62,7 @@ func TestGetJiraIssuesRestURL(t *testing.T) {
 		"username",
 		"pass",
 		"https://project.atlassian.net/rest/api/2/",
+		"",
 		"",
 	}
 	url = getJiraIssuesRestURL("NEW-123", &config)

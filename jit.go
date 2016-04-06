@@ -53,6 +53,13 @@ func setGlobalFlags(app *cli.App, config *configuration) {
 			Value:       config.ProjectCode,
 			Destination: &config.ProjectCode,
 		},
+		cli.StringFlag{
+			Name:        "working-branch, wb",
+			Usage:       "Git working branch. If set, checkout command without ID will checkout this branch.",
+			EnvVar:      "JIT_WORKING_BRANCH",
+			Value:       config.WorkingBranch,
+			Destination: &config.WorkingBranch,
+		},
 	}
 }
 

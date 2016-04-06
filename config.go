@@ -8,16 +8,17 @@ import (
 
 // configuration struct for holding config data
 type configuration struct {
-	Username    string `json:"username"`
-	Password    string `json:"password"`
-	URL         string `json:"url"`
-	ProjectCode string `json:"project"`
+	Username      string `json:"username"`
+	Password      string `json:"password"`
+	URL           string `json:"url"`
+	ProjectCode   string `json:"project"`
+	WorkingBranch string `json:"working-branch"`
 }
 
 // Try to load configuration from json file.
 // If unable to load return empty config struct
 func getJSONConfiguration() configuration {
-	configuration := configuration{}
+	var configuration = configuration{}
 
 	file, err := loadConfigFile(".jit.json")
 	if err != nil {

@@ -49,12 +49,14 @@ You just have to expose this environment variables:
  * JIRA_PASSWORD
  * JIRA_URL
  * JIRA_PROJECT_CODE [optional]
+ * JIT_WORKING_BRANCH [optional]
 
 ## Configuration options
   * username - required - Your jira username. Usually first part of email address you use for jira login
   * password - required - Your jira password
   * url - required - Url pointing on your jira rest api endpoint. Ussualy something like https://company.atlassian.net/rest/api/2/
   * project - optional - Your project code that is part of your issue IDs. In jira issues have IDs like PROJ-ID, if you specify project code as PROJ you will be able to use jit commands with only specifying number part of issue ID. This is useful if you only have one jira project and don't want to repeat this in each command.
+  * working-branch - optional - If working branch is set, calling jit checkout without issue ID will checkout that branch.This is useful for switching to main working branch, for example develop, if using gitflow.
 
 ## Usage
 To see full list of commands type:
@@ -77,6 +79,11 @@ $ jit checkout PROJ-20
 Using short command
 ```sh
 $ jit co 20
+```
+
+Checkouting working branch (if set in options)
+```sh
+$ jit co
 ```
 
 ### Creating new branch
