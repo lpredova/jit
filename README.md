@@ -1,4 +1,4 @@
-# JIT - Jira & git [![Build Status](https://travis-ci.org/Rentlio/jit.svg?branch=master)](https://travis-ci.org/Rentlio/jit)
+# JIT - Jira & git [![Build Status](https://travis-ci.org/Rentlio/jit.svg?branch=master)](https://travis-ci.org/Rentlio/jit) [![Go Report Card](https://goreportcard.com/badge/github.com/Rentlio/jit)](https://goreportcard.com/report/github.com/Rentlio/jit)
 
 Jit is a simple terminal app that is used to help using git workflows with Jira Issue and Project tracking solution.
 
