@@ -1,14 +1,14 @@
 sudo: false
 language: go
 
-env:
-  - GO15VENDOREXPERIMENT=1
-
 go:
-  - 1.5
+  - 1.6
 
 install: true
 
 script:
   - go build
-  - go test -v -cover
+  - go test -coverprofile=coverage.txt -covermode=atomic
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
