@@ -94,6 +94,12 @@ $ jit co -b 20
 ```
 will create new branch with name set to issue ID 20 summary
 
+### Display issue details
+```sh
+$ jit d 20
+```
+will display short info about issue.
+
 ### Listing issues for specific Version
 To list all issues that are in some version you can call:
 ```sh

@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"regexp"
@@ -100,6 +101,10 @@ type VersionIssues struct {
 	Issues []*Issue `json:"issues,omitempty"`
 }
 
+func (i Issue) String() string {
+	return fmt.Sprintf("\n%s | %s | %s\n", i.Fields.IssueType.Name, i.Fields.Summary, i.Fields.Status.Name)
+}
+
 func getJiraVersionIssues(version string, config *configuration) (VersionIssues, error) {
 	client := &http.Client{}
 	var issues VersionIssues
@@ -140,6 +145,10 @@ func GetIssue(id string, config *configuration) (Issue, error) {
 	contents, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return issue, err
+	}
+
+	if resp.StatusCode == 404 {
+		return issue, errors.New("Issue not Found")
 	}
 
 	error := json.Unmarshal(contents, &issue)

@@ -44,3 +44,12 @@ func getVersionIssues(c *cli.Context, config *configuration) {
 		fmt.Println(issue.Fields.IssueType.Name, "-", issue.Fields.Summary)
 	}
 }
+
+func showIssueDetails(c *cli.Context, config *configuration) {
+	issue, err := GetIssue(c.Args().First(), config)
+	if err != nil {
+		fmt.Println(err.Error())
+		os.Exit(1)
+	}
+	fmt.Println(issue)
+}
