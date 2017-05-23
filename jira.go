@@ -133,11 +133,11 @@ func getJiraVersionIssues(version string, config *configuration) (VersionIssues,
 }
 
 // GetIssue - Get Jira issue data
-func GetIssue(id string, config *configuration) (Issue, error) {
+func GetIssue(id string, projectAlias string, config *configuration) (Issue, error) {
 	client := &http.Client{}
 	var issue Issue
 
-	url := getJiraIssuesRestURL(id, config)
+	url := getJiraIssuesRestURL(id, projectAlias, config)
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -163,18 +163,21 @@ func GetIssue(id string, config *configuration) (Issue, error) {
 	return issue, error
 }
 
-func getJiraIssuesRestURL(id string, config *configuration) string {
+func getJiraIssuesRestURL(id string, projectAlias string, config *configuration) string {
 	var url string
 	baseURL := strings.TrimRight(config.URL, "/")
 
-	// projects specified
-	if len(config.Projects) > 0 {
+	if len(projectAlias) > 0 {
 		for _, project := range config.Projects {
-			url = baseURL + "/issue/" + project.ProjectCode + "-" + id
+
+			if project.Alias == projectAlias {
+				url = baseURL + "/issue/" + project.ProjectCode + "-" + id
+			}
 		}
-	} else {
-		// no projects - basic case
-		url = baseURL + "/issue/" + id
+	}
+
+	if len(url) == 0 {
+		url = baseURL + "/issue/" + getDefaultProjectCode(config) + id
 	}
 
 	return url
@@ -191,14 +194,25 @@ func getBranchNameForIssue(issue Issue) (string, error) {
 	return issueType + "-" + stripProjectCode(issue.Key) + "-" + summary, nil
 }
 
-func getBranchName(id string, config *configuration) (string, error) {
+// Method that gets branch name by id and project, if no projectAlias is defined
+// then we use default project, and if default project is not defined than we use default
+func getBranchName(id string, projectAlias string, config *configuration) (string, error) {
 
-	// TODO figure out what does this code do
-	/*if id == "" && config.WorkingBranch != "" {
-		return config.WorkingBranch, nil
-	}*/
+	// Get branch for assigned project
+	if len(projectAlias) > 0 {
+		defaultBranch := getDefaultBranchForProject(config, projectAlias)
+		if len(defaultBranch) > 0 {
+			return defaultBranch, nil
+		}
+	}
 
-	issue, err := GetIssue(id, config)
+	// Get branch for default project
+	defaultBranch := getDefaultBranch(config)
+	if len(defaultBranch) > 0 {
+		return defaultBranch, nil
+	}
+
+	issue, err := GetIssue(id, projectAlias, config)
 	if err != nil {
 		return "", err
 	}

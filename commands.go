@@ -11,12 +11,19 @@ import (
 // Use Jira issue ID to form a branch name
 // and checkout to that branch. If -b switch is specified
 // new branch will be created
+// second param is project alias used to switch between projects (optional)
+// if second param is not provided then we use project from config with default flag
 func checkoutBranch(c *cli.Context, config *configuration) {
-	branchName, err := getBranchName(c.Args().First(), config)
+
+	issueID := c.Args().First()
+	projectAlias := c.Args().Get(1)
+
+	branchName, err := getBranchName(issueID, projectAlias, config)
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(1)
 	}
+
 	create := c.Bool("b")
 	var out []byte
 	if create {
@@ -46,7 +53,7 @@ func getVersionIssues(c *cli.Context, config *configuration) {
 }
 
 func showIssueDetails(c *cli.Context, config *configuration) {
-	issue, err := GetIssue(c.Args().First(), config)
+	issue, err := GetIssue(c.Args().First(), "", config)
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(1)

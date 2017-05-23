@@ -29,14 +29,16 @@ Put .jit.json file in you home folder with content:
   "url" : "YOUR JIRA BASE URL",
   "projects" : [
     {
-      "alias" : "Web",
-      "project" : "OPTIONAL - JIRA PROJECT CODE",
-      "working-branch" : "OPTIONAL - You project main git branch (master, develop,...)"
+      "alias" :           "Web",
+      "project" :         "JIRA PROJECT CODE",
+      "working-branch" :  "You project main git branch (master, develop,...)",
+      "isDefaultProject" : false
     },
     {
-      "alias": "iOS",
-      "project" : "OPTIONAL - JIRA PROJECT CODE",
-      "working-branch" : "OPTIONAL - You project main git branch (master, develop,...)"
+      "alias":            "iOS",
+      "project" :         "JIRA PROJECT CODE",
+      "working-branch" :  "You project main git branch (master, develop,...)",
+      "isDefaultProject": true
     }
   ]
 }
