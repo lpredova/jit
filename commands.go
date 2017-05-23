@@ -16,7 +16,11 @@ import (
 func checkoutBranch(c *cli.Context, config *configuration) {
 
 	issueID := c.Args().First()
-	projectAlias := c.Args().Get(1)
+
+	projectAlias := c.String("pr")
+	if len(projectAlias) == 0 {
+		projectAlias = getDefaultProjectAlias(config)
+	}
 
 	branchName, err := getBranchName(issueID, projectAlias, config)
 	if err != nil {

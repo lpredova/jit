@@ -138,6 +138,9 @@ func GetIssue(id string, projectAlias string, config *configuration) (Issue, err
 	var issue Issue
 
 	url := getJiraIssuesRestURL(id, projectAlias, config)
+	if url == "" {
+		panic("URL not existing")
+	}
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -163,13 +166,13 @@ func GetIssue(id string, projectAlias string, config *configuration) (Issue, err
 	return issue, error
 }
 
+// Getting URL to the issue, if wrong alias is provided we use the default one
 func getJiraIssuesRestURL(id string, projectAlias string, config *configuration) string {
 	var url string
 	baseURL := strings.TrimRight(config.URL, "/")
 
 	if len(projectAlias) > 0 {
 		for _, project := range config.Projects {
-
 			if project.Alias == projectAlias {
 				url = baseURL + "/issue/" + project.ProjectCode + "-" + id
 			}
@@ -177,7 +180,7 @@ func getJiraIssuesRestURL(id string, projectAlias string, config *configuration)
 	}
 
 	if len(url) == 0 {
-		url = baseURL + "/issue/" + getDefaultProjectCode(config) + id
+		url = baseURL + "/issue/" + getDefaultProjectCode(config) + "-" + id
 	}
 
 	return url

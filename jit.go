@@ -47,18 +47,8 @@ func setGlobalFlags(app *cli.App, config *configuration) {
 			Destination: &config.URL,
 		},
 		cli.StringFlag{
-			Name:  "projects, pro",
-			Usage: "Lists jira projects in configuration",
-		},
-		cli.StringFlag{
-			Name:   "alias, al",
-			Usage:  "Jira project alias, User defined alias used for easier project managment.",
-			EnvVar: "JIRA_PROJECT_CODE",
-		},
-		cli.StringFlag{
-			Name:   "working-branch, wb",
-			Usage:  "Git working branch. If set, checkout command without ID will checkout this branch.",
-			EnvVar: "JIT_WORKING_BRANCH",
+			Name:  "pr",
+			Usage: "Define project to use by providing valid project code",
 		},
 	}
 }
@@ -74,6 +64,10 @@ func setCommands(app *cli.App, config *configuration) {
 				cli.BoolFlag{
 					Name:  "b",
 					Usage: "Create new branch while checkout",
+				},
+				cli.StringFlag{
+					Name:  "pr",
+					Usage: "Project alias",
 				},
 			},
 			Action: func(c *cli.Context) {

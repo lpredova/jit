@@ -109,11 +109,24 @@ func getDefaultBranch(conf *configuration) string {
 	return ""
 }
 
+// Get default project alias for default project
+func getDefaultProjectAlias(conf *configuration) string {
+	if len(conf.Projects) > 0 {
+		for _, project := range conf.Projects {
+			if project.IsDefault {
+				return project.Alias
+			}
+		}
+	}
+
+	return ""
+}
+
 // Get default project code for default project
 func getDefaultProjectCode(conf *configuration) string {
 	if len(conf.Projects) > 0 {
 		for _, project := range conf.Projects {
-			if project.IsDefault && len(project.ProjectCode) > 0 {
+			if project.IsDefault {
 				return project.ProjectCode
 			}
 		}
