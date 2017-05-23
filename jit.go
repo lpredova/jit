@@ -96,6 +96,12 @@ func setCommands(app *cli.App, config *configuration) {
 			Name:    "description",
 			Aliases: []string{"d"},
 			Usage:   "Show issue description",
+			Flags: []cli.Flag{
+				cli.StringFlag{
+					Name:  "pr",
+					Usage: "Project alias",
+				},
+			},
 			Action: func(c *cli.Context) {
 				valid := validateConfiguration(config)
 				if !valid {

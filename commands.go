@@ -16,7 +16,6 @@ import (
 func checkoutBranch(c *cli.Context, config *configuration) {
 
 	issueID := c.Args().First()
-
 	projectAlias := c.String("pr")
 	if len(projectAlias) == 0 {
 		projectAlias = getDefaultProjectAlias(config)
@@ -57,7 +56,14 @@ func getVersionIssues(c *cli.Context, config *configuration) {
 }
 
 func showIssueDetails(c *cli.Context, config *configuration) {
-	issue, err := GetIssue(c.Args().First(), "", config)
+
+	issueID := c.Args().First()
+	projectAlias := c.String("pr")
+	if len(projectAlias) == 0 {
+		projectAlias = getDefaultProjectAlias(config)
+	}
+
+	issue, err := GetIssue(issueID, projectAlias, config)
 	if err != nil {
 		fmt.Println(err.Error())
 		os.Exit(1)

@@ -110,7 +110,9 @@ func getJiraVersionIssues(version string, config *configuration) (VersionIssues,
 	var issues VersionIssues
 	url := strings.TrimRight(config.URL, "/") + "/search"
 
-	var data = []byte(`{"jql":"fixVersion = ` + version + `","startAt":0,"maxResults":1000,"fields":["id","key","summary", "issuetype"],"expand":[]}`)
+	query := `{"jql":"fixVersion = ` + version + `","startAt":0,"maxResults":1000,"fields":["id","key","summary", "issuetype"],"expand":[]}`
+	var data = []byte(query)
+
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(data))
 	req.Header.Set("Content-Type", "application/json")
 	if err != nil {
@@ -138,6 +140,7 @@ func GetIssue(id string, projectAlias string, config *configuration) (Issue, err
 	var issue Issue
 
 	url := getJiraIssuesRestURL(id, projectAlias, config)
+
 	if url == "" {
 		panic("URL not existing")
 	}

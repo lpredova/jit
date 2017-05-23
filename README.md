@@ -47,13 +47,13 @@ Put .jit.json file in you home folder with content:
 ### Using cli flags
 
 ```sh
-$ jit --username myuser --password mypass --url https://company.atlassian.net/rest/api/2/ --project PROJ ...
+$ jit --username myuser --password mypass --url https://company.atlassian.net/rest/api/2/ --pr projectAlias ...
 ```
 
 or using short codes for flags:
 
 ```sh
-$ jit -u myuser -p mypass --url https://company.atlassian.net/rest/api/2/ --project PROJ ...
+$ jit -u myuser -p mypass --url https://company.atlassian.net/rest/api/2/ --pr projectAlias ...
 ```
 
 ### Using environment variables
@@ -61,15 +61,19 @@ You just have to expose this environment variables:
  * JIRA_USERNAME
  * JIRA_PASSWORD
  * JIRA_URL
- * JIRA_PROJECT_CODE [optional]
- * JIT_WORKING_BRANCH [optional]
 
 ## Configuration options
   * username - required - Your jira username. Usually first part of email address you use for jira login
   * password - required - Your jira password
   * url - required - Url pointing on your jira rest api endpoint. Ussualy something like https://company.atlassian.net/rest/api/2/
+
+### Project configuration
+  * alias - You can define alias to provide you quick access to project configuration, further on if you
+  want to switch between project just use -pr alias
   * project - optional - Your project code that is part of your issue IDs. In jira issues have IDs like PROJ-ID, if you specify project code as PROJ you will be able to use jit commands with only specifying number part of issue ID. This is useful if you only have one jira project and don't want to repeat this in each command.
   * working-branch - optional - If working branch is set, calling jit checkout without issue ID will checkout that branch.This is useful for switching to main working branch, for example develop, if using gitflow.
+  * isDefaultProject - Default project flag. If you have multiple projects then you can specify default project so for default project you can use jit cmds without [-pr projectAlias]. There must be *only one*
+  project flagged as default.
 
 ## Usage
 To see full list of commands type:
@@ -102,13 +106,13 @@ $ jit co
 ### Creating new branch
 Creating new branch is done same as checking out existing one with addition to -b flag. For example:
 ```sh
-$ jit co -b 20
+$ jit co -b [-pr projectAlias] 20
 ```
 will create new branch with name set to issue ID 20 summary
 
 ### Display issue details
 ```sh
-$ jit d 20
+$ jit d [-pr projectAlias] 20
 ```
 will display short info about issue.
 
@@ -120,7 +124,7 @@ $ jit version v1.20.1
 and list of issues will be shown. This is useful for deployment messages, notifications, etc...
 
 ## Contribution
-This tool is actively used in Rentl.io Dev Workflow, but we are open to any changes, bugfixes, new features, etc. Just drop us some Pull Requests, making sure tests are passing, and we'll gladly merge it :).
+This tool is actively used in Rentl.io Dev Workflow, but we are open to any changes, bug fixes, new features, etc. Just drop us some Pull Requests, making sure tests are passing, and we'll gladly merge it :).
 
 ## License
 MIT
