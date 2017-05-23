@@ -53,3 +53,14 @@ func showIssueDetails(c *cli.Context, config *configuration) {
 	}
 	fmt.Println(issue)
 }
+
+func listJiraProjectsFromConfiguration(c *cli.Context, config *configuration) {
+	if len(config.Projects) > 0 {
+		for index, project := range config.Projects {
+			project := fmt.Sprintf("%d.\nCode:\t%s\nAlias:\t%s\nBranch:\t%s\n", index+1, project.ProjectCode, project.Alias, project.WorkingBranch)
+			fmt.Println(project)
+		}
+	} else {
+		fmt.Println("No configured projects")
+	}
+}

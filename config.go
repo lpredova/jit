@@ -11,7 +11,7 @@ type configuration struct {
 	Username string    `json:"username"`
 	Password string    `json:"password"`
 	URL      string    `json:"url"`
-	Projects []Project `json:"project"`
+	Projects []Project `json:"projects"`
 }
 
 // Project is config for each project in jira separately
@@ -21,12 +21,15 @@ type Project struct {
 	WorkingBranch string `json:"working-branch"`
 }
 
+//const jitCoinfigFIle = ".jit.json"
+const jitCoinfigFIle = ".jit2.json"
+
 // Try to load configuration from json file.
 // If unable to load return empty config struct
 func getJSONConfiguration() configuration {
 	var configuration = configuration{}
 
-	file, err := loadConfigFile(".jit.json")
+	file, err := loadConfigFile(jitCoinfigFIle)
 	if err != nil {
 		return configuration
 	}

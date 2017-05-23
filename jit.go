@@ -47,21 +47,18 @@ func setGlobalFlags(app *cli.App, config *configuration) {
 			Destination: &config.URL,
 		},
 		cli.StringFlag{
-			Name:   "alias, al",
-			Usage:  "Jira project alias, User defined alias used for easier project managment.",
-			EnvVar: "JIRA_PROJECT_CODE",
+			Name:  "projects, pro",
+			Usage: "Lists jira projects in configuration",
 		},
 		cli.StringFlag{
-			Name:   "projects, pro",
-			Usage:  "Jira project code. If specified only issues ID can be used in commands.",
+			Name:   "alias, al",
+			Usage:  "Jira project alias, User defined alias used for easier project managment.",
 			EnvVar: "JIRA_PROJECT_CODE",
 		},
 		cli.StringFlag{
 			Name:   "working-branch, wb",
 			Usage:  "Git working branch. If set, checkout command without ID will checkout this branch.",
 			EnvVar: "JIT_WORKING_BRANCH",
-			//Value:       config.WorkingBranch,
-			//Destination: &config.WorkingBranch,
 		},
 	}
 }
@@ -114,11 +111,21 @@ func setCommands(app *cli.App, config *configuration) {
 				showIssueDetails(c, config)
 			},
 		},
+		{
+			Name:    "projects",
+			Aliases: []string{"pro"},
+			Usage:   "List configured jira projects",
+			Action: func(c *cli.Context) {
+				valid := validateConfiguration(config)
+				if !valid {
+					fmt.Println(errorDecorator("Please provide valid configuration"))
+					os.Exit(1)
+				}
+
+				listJiraProjectsFromConfiguration(c, config)
+			},
+		},
 	}
-}
-
-func setProjects(app *cli.App, config *configuration) {
-
 }
 
 func main() {
@@ -127,7 +134,5 @@ func main() {
 
 	setGlobalFlags(app, &config)
 	setCommands(app, &config)
-	setProjects(app, &config)
-
 	app.Run(os.Args)
 }
