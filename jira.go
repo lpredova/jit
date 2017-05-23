@@ -118,6 +118,10 @@ func getJiraVersionIssues(version string, config *configuration) (VersionIssues,
 	}
 	req.SetBasicAuth(config.Username, config.Password)
 	resp, err := client.Do(req)
+	if err != nil {
+		panic("Error connecting to jira")
+	}
+
 	defer resp.Body.Close()
 	contents, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
@@ -141,6 +145,10 @@ func GetIssue(id string, config *configuration) (Issue, error) {
 	}
 	req.SetBasicAuth(config.Username, config.Password)
 	resp, err := client.Do(req)
+	if err != nil {
+		panic("Error while connecting to jira")
+	}
+
 	defer resp.Body.Close()
 	contents, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
@@ -158,11 +166,17 @@ func GetIssue(id string, config *configuration) (Issue, error) {
 func getJiraIssuesRestURL(id string, config *configuration) string {
 	var url string
 	baseURL := strings.TrimRight(config.URL, "/")
-	if config.ProjectCode != "" {
-		url = baseURL + "/issue/" + config.ProjectCode + "-" + id
+
+	// projects specified
+	if len(config.Projects) > 0 {
+		for _, project := range config.Projects {
+			url = baseURL + "/issue/" + project.ProjectCode + "-" + id
+		}
 	} else {
+		// no projects - basic case
 		url = baseURL + "/issue/" + id
 	}
+
 	return url
 }
 
@@ -178,9 +192,12 @@ func getBranchNameForIssue(issue Issue) (string, error) {
 }
 
 func getBranchName(id string, config *configuration) (string, error) {
-	if id == "" && config.WorkingBranch != "" {
+
+	// TODO figure out what does this code do
+	/*if id == "" && config.WorkingBranch != "" {
 		return config.WorkingBranch, nil
-	}
+	}*/
+
 	issue, err := GetIssue(id, config)
 	if err != nil {
 		return "", err

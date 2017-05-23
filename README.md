@@ -27,8 +27,18 @@ Put .jit.json file in you home folder with content:
   "username": "YOUR JIRA USERNAME",
   "password": "YOUR JIRA PASSWORD",
   "url" : "YOUR JIRA BASE URL",
-  "project" : "OPTIONAL - JIRA PROJECT CODE",
-  "working-branch" : "OPTIONAL - You project main git branch (master, develop,...)"
+  "projects" : [
+    {
+      "alias" : "Web",
+      "project" : "OPTIONAL - JIRA PROJECT CODE",
+      "working-branch" : "OPTIONAL - You project main git branch (master, develop,...)"
+    },
+    {
+      "alias": "iOS",
+      "project" : "OPTIONAL - JIRA PROJECT CODE",
+      "working-branch" : "OPTIONAL - You project main git branch (master, develop,...)"
+    }
+  ]
 }
 ```
 

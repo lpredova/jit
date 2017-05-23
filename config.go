@@ -8,9 +8,15 @@ import (
 
 // configuration struct for holding config data
 type configuration struct {
-	Username      string `json:"username"`
-	Password      string `json:"password"`
-	URL           string `json:"url"`
+	Username string    `json:"username"`
+	Password string    `json:"password"`
+	URL      string    `json:"url"`
+	Projects []Project `json:"project"`
+}
+
+// Project is config for each project in jira separately
+type Project struct {
+	Alias         string `json:"alias"`
 	ProjectCode   string `json:"project"`
 	WorkingBranch string `json:"working-branch"`
 }
