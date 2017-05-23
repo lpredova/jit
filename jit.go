@@ -15,9 +15,9 @@ func createNewApp() *cli.App {
 	app := cli.NewApp()
 
 	app.Name = "Jira & Git Worflow"
-	app.Usage = "Simple tool for automating branch management using jira issues"
+	app.Usage = "Simple tool for automating branch and projects management using jira issues"
 	app.Author = "Rentl.io developers@rentl.io"
-	app.Version = "0.4.0"
+	app.Version = "0.5.0"
 
 	return app
 }
@@ -47,18 +47,8 @@ func setGlobalFlags(app *cli.App, config *configuration) {
 			Destination: &config.URL,
 		},
 		cli.StringFlag{
-			Name:        "project",
-			Usage:       "Jira project code. If specified only issues ID can be used in commands.",
-			EnvVar:      "JIRA_PROJECT_CODE",
-			Value:       config.ProjectCode,
-			Destination: &config.ProjectCode,
-		},
-		cli.StringFlag{
-			Name:        "working-branch, wb",
-			Usage:       "Git working branch. If set, checkout command without ID will checkout this branch.",
-			EnvVar:      "JIT_WORKING_BRANCH",
-			Value:       config.WorkingBranch,
-			Destination: &config.WorkingBranch,
+			Name:  "pr",
+			Usage: "Define project to use by providing valid project code",
 		},
 	}
 }
@@ -74,6 +64,10 @@ func setCommands(app *cli.App, config *configuration) {
 				cli.BoolFlag{
 					Name:  "b",
 					Usage: "Create new branch while checkout",
+				},
+				cli.StringFlag{
+					Name:  "pr",
+					Usage: "Project alias",
 				},
 			},
 			Action: func(c *cli.Context) {
@@ -102,6 +96,12 @@ func setCommands(app *cli.App, config *configuration) {
 			Name:    "description",
 			Aliases: []string{"d"},
 			Usage:   "Show issue description",
+			Flags: []cli.Flag{
+				cli.StringFlag{
+					Name:  "pr",
+					Usage: "Project alias",
+				},
+			},
 			Action: func(c *cli.Context) {
 				valid := validateConfiguration(config)
 				if !valid {
@@ -111,12 +111,27 @@ func setCommands(app *cli.App, config *configuration) {
 				showIssueDetails(c, config)
 			},
 		},
+		{
+			Name:    "projects",
+			Aliases: []string{"pro"},
+			Usage:   "List configured jira projects",
+			Action: func(c *cli.Context) {
+				valid := validateConfiguration(config)
+				if !valid {
+					fmt.Println(errorDecorator("Please provide valid configuration"))
+					os.Exit(1)
+				}
+
+				listJiraProjectsFromConfiguration(c, config)
+			},
+		},
 	}
 }
 
 func main() {
 	config := getJSONConfiguration()
 	app := createNewApp()
+
 	setGlobalFlags(app, &config)
 	setCommands(app, &config)
 	app.Run(os.Args)
